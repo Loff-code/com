@@ -5,4 +5,4 @@ all:
 
 clean:
 	rm *.class
-shitbugger
+shit

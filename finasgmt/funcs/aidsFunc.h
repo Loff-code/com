@@ -1,0 +1,4 @@
+int aids()
+{
+    return booger;
+}
