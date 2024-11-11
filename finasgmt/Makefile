@@ -5,4 +5,6 @@ all:
 
 clean:
 	rm *.class
-Aids
+
+
+søren
