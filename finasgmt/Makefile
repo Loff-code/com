@@ -5,6 +5,3 @@ all:
 
 clean:
 	rm *.class
-
-
-søren
