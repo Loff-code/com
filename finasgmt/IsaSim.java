@@ -25,7 +25,7 @@ public class IsaSim {
 
         pc = 0;
 
-        for (; ; ) {
+        for (;;) {
 
             int instr = progr[pc >> 2];
             int opcode = instr & 0x7f;
