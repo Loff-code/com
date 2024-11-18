@@ -6,7 +6,7 @@
  *
  * @author Martin Schoeberl (martin@jopdesign.com)
  */
-public class IsaSim {
+public class ll {
 
     static int pc;
     static int reg[] = new int[4];
