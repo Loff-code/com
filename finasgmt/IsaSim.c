@@ -50,6 +50,11 @@ int main(int argc, char const *argv[])
     }
 
     printf("Program exit\n");
-
+    while (1)
+    {
+        // printf("hello");
+        
+    }
+    
     return 0;
 }
