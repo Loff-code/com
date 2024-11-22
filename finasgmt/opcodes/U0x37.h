@@ -20,6 +20,14 @@ void execute_u_type(int rd, int rs1, int imm, int funct3, int reg[])
         reg[rd] = imm << 12;
         printf("Executed LUI: x%d = %x\n", rd, reg[rd]);
         break;
+    case 0x05: // LUI
+        reg[rd] = imm << 12;
+        printf("Executed LUI: x%d = %x\n", rd, reg[rd]);
+        break;
+    case 0x07: // LUI
+        reg[rd] = imm << 12;
+        printf("Executed LUI: x%d = %x\n", rd, reg[rd]);
+        break;
     default:
         printf("U-Type funct3=%x not implemented\n", funct3);
     }

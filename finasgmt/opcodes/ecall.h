@@ -2,20 +2,27 @@
 #define ecall_h
 
 #include <stdio.h>
-
-// Function to execute I-Type instructions
+#include <stdlib.h>
 void execute_ecall(int rd, int rs1, int imm, int funct3, int funct7, int reg[])
 {
-    switch (funct3)
+    // Check the value of a7 to determine the type of ECALL
+    if (reg[17] == 10) // Register a7 is x17
     {
-    case 0x00:
-        // Perform the ADDI operation
-        reg[rd] = reg[rs1] + imm;
-        printf("Executed ADDI: x%d = x%d + %d\n", rd, rs1, imm);
-        break;
+        printf("Program exited successfully via ECALL\n");
+        // Print final register states
+        printf("Final register states:\n");
+        for (int i = 0; i < 32; ++i)
+        {
 
-    default:
-        printf("ECALL funct3=%x not implemented\n", funct3);
+            printf("x%d=%d ", i, reg[i]);
+        }
+        printf("\n");
+        exit(0); // Stop the program
+    }
+    else
+    {
+        printf("Unhandled ECALL with a7 = %d\n", reg[17]);
+        exit(0); // Stop the program
     }
 }
 

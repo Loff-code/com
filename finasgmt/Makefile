@@ -4,7 +4,7 @@ SRC = IsaSim.c
 TARGET = IsaSim
 
 all: $(TARGET)
-	./$(TARGET)
+	./$(TARGET) tests/task3/loop.bin 
 
 $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRC)
