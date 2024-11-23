@@ -71,18 +71,26 @@ void execute_store(uint32_t instr, uint32_t *reg, uint32_t *memory)
         }
         printf("Executed SH: Memory[%d] updated with half-word 0x%04X\n", word_index, extracted_half);
         break;
-
     case 0x02: // SW: Store Word
         if (byte_offset == 0)
         {
-            memory[word_index] = extracted_word; // Store full word
+            memory[word_index] = extracted_word; // Aligned store
         }
         else
         {
-            printf("Error: Unaligned word store at address 0x%X\n", address);
-            return;
+            // Unaligned store (split across two memory words)
+            uint32_t lower_part = extracted_word << (byte_offset * 8);
+            uint32_t upper_part = extracted_word >> (32 - byte_offset * 8);
+
+            memory[word_index] &= ~((1U << (8 * (4 - byte_offset))) - 1); // Clear relevant bytes
+            memory[word_index] |= lower_part;
+
+            memory[word_index + 1] &= ~((1U << (byte_offset * 8)) - 1); // Clear relevant bytes
+            memory[word_index + 1] |= upper_part;
+
+            printf("Executed SW (unaligned): Memory[%d] = 0x%08X, Memory[%d] = 0x%08X\n",
+                   word_index, memory[word_index], word_index + 1, memory[word_index + 1]);
         }
-        printf("Executed SW: Memory[%d] updated with word 0x%08X\n", word_index, extracted_word);
         break;
 
     default:
