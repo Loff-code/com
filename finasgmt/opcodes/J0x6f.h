@@ -9,7 +9,11 @@ void execute_j_type(int rd, int rs1, int imm, int funct3, int funct7, int reg[],
     // switch (funct3)
     // {
     // case 0x00:
-    reg[rd] = *pc + 4;
+    if (rd != 0)
+    {
+        reg[rd] = *pc + 4;
+    }
+
     printf("Executed JAL: jump and x1 = initial + 4 || x%d = %d  imm%d pc%d\n", rd, reg[rd], imm, pc);
 
     // printf("%d\n\n\n", imm);
