@@ -8,24 +8,8 @@
 #include <stdio.h>
 
 // Function prototype
-void execute_store(uint32_t instr, uint32_t *reg, uint32_t *memory)
+void execute_s_type(int rd, int rs1, int rs2, int funct3, int32_t imm, uint32_t *reg, uint32_t *memory)
 {
-    // Extract lower and upper parts of the immediate
-    int32_t imm_lower = (instr >> 7) & 0x1F;    // imm[4:0] (bits 7–11)
-    int32_t imm_upper = (instr >> 25) & 0x7F;   // imm[11:5] (bits 25–31)
-    int32_t imm = (imm_upper << 5) | imm_lower; // Combine into a 12-bit value
-
-    // Sign-extend the 12-bit immediate to 32 bits
-    if (imm & 0x800)
-    {                      // Check the sign bit (bit 11)
-        imm |= 0xFFFFF000; // Sign-extend if necessary
-    }
-
-    // Extract registers and funct3
-    uint32_t rs1 = (instr >> 15) & 0x1F;    // Base register (bits 19–15)
-    uint32_t rs2 = (instr >> 20) & 0x1F;    // Source register (bits 24–20)
-    uint32_t funct3 = (instr >> 12) & 0x07; // funct3 (bits 14–12)
-
     // Compute memory address
     int address = reg[rs1] + imm;  // Effective memory address
     int word_index = address / 4;  // Word-aligned memory index
@@ -40,7 +24,7 @@ void execute_store(uint32_t instr, uint32_t *reg, uint32_t *memory)
     printf("Registers: rs1 (x%d) = 0x%08X, rs2 (x%d) = 0x%08X\n", rs1, reg[rs1], rs2, reg[rs2]);
     printf("Immediate: 0x%08X (%d)\n", imm, imm);
     printf("Address: 0x%X (word_index: %d, byte_offset: %d)\n", address, word_index, byte_offset);
-    printf("Memory before: 0x%08X\n", memory[word_index]);
+    // printf("Memory before: 0x%08X\n", memory[word_index]);
 
     // Perform the store operation based on funct3
     switch (funct3)

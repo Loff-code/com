@@ -1,4 +1,0 @@
-int aids()
-{
-    return booger;
-}

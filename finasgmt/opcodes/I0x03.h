@@ -7,7 +7,7 @@
 
 // Function prototype
 
-void execute_load(uint32_t instr, uint32_t *reg, uint32_t *memory)
+void execute_l_type(uint32_t instr, uint32_t *reg, uint32_t *memory)
 {
     // Extract immediate (imm[11:0])
     int32_t imm = (instr >> 20) & 0xFFF; // Bits 20-31
@@ -27,7 +27,6 @@ void execute_load(uint32_t instr, uint32_t *reg, uint32_t *memory)
     int byte_offset = effective_address % 4; // Byte offset within the word (0-3)
 
     // Debugging output
-    printf("Instruction: 0x%08X\n", instr);
     printf("Registers: rs1 (x%d) = 0x%08X, rd (x%d)\n", rs1, reg[rs1], rd);
     printf("Immediate: 0x%08X (%d)\n", imm, imm);
     printf("Effective Address: 0x%X (Word Index: %d, Byte Offset: %d)\n", effective_address, word_index, byte_offset);

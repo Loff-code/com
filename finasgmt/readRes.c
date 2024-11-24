@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
 
     const char *filename = argv[1];
     read_registers_from_file(filename);
+    printf("\n"); // Print the decimal equivalent
 
     return 0;
 }

@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+void printRegs(int reg[], int flag);
 void execute_ecall(int rd, int rs1, int imm, int funct3, int funct7, int reg[])
 {
     // Check the value of a7 to determine the type of ECALL
@@ -11,11 +12,7 @@ void execute_ecall(int rd, int rs1, int imm, int funct3, int funct7, int reg[])
         printf("Program exited successfully via ECALL\n");
         // Print final register states
         printf("Final register states:\n");
-        for (int i = 0; i < 32; ++i)
-        {
-
-            printf("x%d=%d ", i, reg[i]);
-        }
+        printRegs(reg, 0);
         printf("\n");
         exit(0); // Stop the program
     }

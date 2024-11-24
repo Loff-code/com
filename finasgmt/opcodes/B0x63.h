@@ -3,12 +3,8 @@
 
 #include <stdio.h>
 
-void execute_b_type(int rs1, int rs2, int instr, int funct3, int *pc, int reg[])
+void execute_b_type(int rs1, int rs2, int imm, int funct3, int *pc, int reg[])
 {
-    int imm = ((instr >> 7) & 0x1e)                    // bits [1:4]
-              | ((instr >> 20) & 0x7e0)                // bits [5:10]
-              | ((instr << 4) & 0x800)                 // bit [11]
-              | (instr & 0x80000000 ? 0xfffff000 : 0); // Sign-extend
 
     switch (funct3)
     {
