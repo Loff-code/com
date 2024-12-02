@@ -15,12 +15,6 @@ void execute_i0x03_type(uint32_t rs1, uint32_t rd, uint32_t funct3, int32_t imm,
     int word_index = effective_address / 4;  // Word-aligned memory index
     int byte_offset = effective_address % 4; // Byte offset within the word (0-3)
 
-    // Debugging output
-    printf("Registers: rs1 (x%d) = 0x%08X, rd (x%d)\n", rs1, reg[rs1], rd);
-    printf("Immediate: 0x%08X (%d)\n", imm, imm);
-    printf("Effective Address: 0x%X (Word Index: %d, Byte Offset: %d)\n", effective_address, word_index, byte_offset);
-    printf("Memory at Word Index %d: 0x%08X\n", word_index, memory[word_index]);
-
     uint8_t extracted_byte = (memory[word_index] >> (byte_offset * 8)) & 0xFF;
     uint16_t extracted_half;
     uint32_t extracted_word;

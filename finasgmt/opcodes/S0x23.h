@@ -1,13 +1,9 @@
 
-
-// Content from /mnt/data/STORE_INSTRUCTIONS.h
 #ifndef STORE_INSTRUCTIONS_H
 #define STORE_INSTRUCTIONS_H
 
 #include <stdint.h>
 #include <stdio.h>
-
-// Function prototype
 void execute_s_type(int rd, int rs1, int rs2, int funct3, int32_t imm, uint32_t *reg, uint32_t *memory)
 {
     // Compute memory address
@@ -19,14 +15,6 @@ void execute_s_type(int rd, int rs1, int rs2, int funct3, int32_t imm, uint32_t 
     uint8_t extracted_byte = reg[rs2] & 0xFF;    // Least significant byte
     uint16_t extracted_half = reg[rs2] & 0xFFFF; // Least significant half-word
     uint32_t extracted_word = reg[rs2];          // Full word
-
-    // Debugging output
-    printf("Registers: rs1 (x%d) = 0x%08X, rs2 (x%d) = 0x%08X\n", rs1, reg[rs1], rs2, reg[rs2]);
-    printf("Immediate: 0x%08X (%d)\n", imm, imm);
-    printf("Address: 0x%X (word_index: %d, byte_offset: %d)\n", address, word_index, byte_offset);
-    // printf("Memory before: 0x%08X\n", memory[word_index]);
-
-    // Perform the store operation based on funct3
     switch (funct3)
     {
     case 0x00:                                                       // SB: Store Byte

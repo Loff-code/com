@@ -17,12 +17,13 @@
 #include "ecall.h" // ECALL instruction
 
 #define MEMORY_SIZE (1024 * 256)
+#define NUM_REGISTERS 32
+
 uint32_t memory[MEMORY_SIZE]; // Simulated memory
 size_t memory_index = 0;
-
-int pc; // Program counter
 int i;
-int reg[32]; // Registers
+int pc;
+int reg[NUM_REGISTERS];
 
 void load_bin_file(const char *filename)
 {
@@ -69,10 +70,6 @@ void load_bin_file(const char *filename)
     fclose(file);
     printf("Program loaded into memory. Total instructions: %zu\n", memory_index);
 }
-
-#define NUM_REGISTERS 32
-
-// Existing printRegs function
 
 // New function to write registers to a binary file
 void write_registers_to_file(const int reg[], const char *filename)

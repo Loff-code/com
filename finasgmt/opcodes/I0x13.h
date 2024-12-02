@@ -15,26 +15,31 @@ void execute_i0x13_type(int rd, int rs1, int imm, int funct3, int funct7, int re
         reg[rd] = reg[rs1] + imm;
         printf("Executed ADDI: x%d = x%d + %d\n", rd, rs1, imm);
         break;
+
     case 0x01:
         // Perform the SLLI operation
         reg[rd] = reg[rs1] << shamt;
         printf("Executed SLLI: x%d = x%d << %d\n", rd, rs1, shamt);
         break;
+
     case 0x02:
         // Perform the SLTI operation
         reg[rd] = reg[rs1] < imm;
         printf("Executed SLTI: x%d = x%d < %d\n", rd, rs1, imm);
         break;
+
     case 0x03:
         // Perform the SLTIU operation
         reg[rd] = (uint32_t)reg[rs1] < imm;
         printf("Executed SLTIU: x%d = x%d < %d\n", rd, rs1, imm);
         break;
+
     case 0x04:
         // Perform the XORI operation
         reg[rd] = reg[rs1] ^ imm;
         printf("Executed XORI: x%d = x%d ^ %d\n", rd, rs1, imm);
         break;
+
     case 0x05:
         // Perform the SRLI operation
         switch (funct7)
@@ -68,9 +73,6 @@ void execute_i0x13_type(int rd, int rs1, int imm, int funct3, int funct7, int re
     default:
         printf("I-Type funct3=%x not implemented\n", funct3);
     }
-    // Perform the ADDI operation
-    // reg[rd] = reg[rs1] + imm;
-    // printf("Executed ADDI: x%d = x%d + %d\n", rd, rs1, imm);
 }
 
 #endif // I0X13_H

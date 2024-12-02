@@ -13,13 +13,6 @@ int main(int argc, char *argv[])
 
     while (1)
     {
-
-        // if (i > 100)
-        // {
-        //     printf("\n");
-        //     return 0;
-        // }
-
         int instr = memory[pc >> 2]; // Fetch instruction
         printf("Instruction: 0x%08X\n", instr);
 
@@ -46,11 +39,9 @@ int main(int argc, char *argv[])
             imm = (imm_20 << 20) | (imm_19_12 << 12) | (imm_11 << 11) | (imm_10_1 << 1);
             if (imm_20)
             {
-                imm |= 0xFFF00000; // Sign-extend to 32 bits
+                imm |= 0xFFF00000;
             }
-
             execute_j_type(rd, rs1, imm, reg, &pc);
-
             break;
 
         case 0x13:                                     // I-Type
@@ -99,16 +90,14 @@ int main(int argc, char *argv[])
             printf("Opcode %x not implemented\n", opcode);
         }
 
-        // printf("Opcode %x\n", opcode);
-
         reg[0] = 0;
+        printf("I = %d PC = %d\n", i++, pc);
+        printRegs(reg, 0);
+        printf("\n\n");
+
         pc += 4; // Increment program counter
         if ((pc >> 2) >= MEMORY_SIZE || memory[pc >> 2] == 0)
             break;
-        printRegs(reg, 0);
-
-        printf("\nI = %d PC = %d", i++, pc);
-        printf("\n\n");
     }
 
     // Final state

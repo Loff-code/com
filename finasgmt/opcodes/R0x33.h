@@ -15,21 +15,19 @@ void execute_r_type(int rd, int rs1, int rs2, int funct3, int funct7, int reg[])
         printf("Executed OR: x%d = x%d | x%d\n", rd, rs1, rs2);
         break;
     case 0x05: // SRL and SRA
-        if (funct7 == 0x00)
+        switch (funct7)
         {
+        case 0x00:
             reg[rd] = (uint32_t)reg[rs1] >> reg[rs2];
             printf("Executed SRL: x%d = x%d >> x%d\n", rd, rs1, rs2);
-        }
-        else if (funct7 == 0x20)
-        {
+
+            break;
+        case 0x20:
             reg[rd] = reg[rs1] >> reg[rs2];
             printf("Executed SRA: x%d = (UNSIGNED)x%d >> x%d\n", rd, rs1, rs2);
+        default:
+            break;
         }
-        else
-        {
-            printf("funct7 = %x\n", funct7);
-        }
-
         break;
     case 0x04: // XOR
         reg[rd] = reg[rs1] ^ reg[rs2];
@@ -47,22 +45,19 @@ void execute_r_type(int rd, int rs1, int rs2, int funct3, int funct7, int reg[])
         reg[rd] = reg[rs1] << reg[rs2];
         printf("Executed SLL: x%d = x%d << x%d\n", rd, rs1, rs2);
         break;
-    case 0:                 // ADD AND SUB
-        if (funct7 == 0x00) // ADD
+    case 0: // ADD AND SUB
+        switch (funct7)
         {
+        case 0x00:
             reg[rd] = reg[rs1] + reg[rs2];
             printf("Executed ADD: x%d = x%d + x%d\n", rd, rs1, rs2);
-        }
-        else if (funct7 == 0x20) // SUB
-        {
+            break;
+        case 0x20:
             reg[rd] = reg[rs1] - reg[rs2];
             printf("Executed SUB: x%d = x%d - x%d\n", rd, rs1, rs2);
+        default:
+            break;
         }
-        else
-        {
-            printf("funct7 = %x\n", funct7);
-        }
-
         break;
     default:
         printf("R-Type funct3=%x not implemented\n", funct3);
