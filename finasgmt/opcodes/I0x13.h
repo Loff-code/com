@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 // Function to execute I-Type instructions
-void execute_i_type(int rd, int rs1, int imm, int funct3, int funct7, int reg[])
+void execute_i0x13_type(int rd, int rs1, int imm, int funct3, int funct7, int reg[])
 {
     int shamt = imm & 0x1f; // Extract the lower 5 bits of imm for shamt
 
@@ -37,20 +37,21 @@ void execute_i_type(int rd, int rs1, int imm, int funct3, int funct7, int reg[])
         break;
     case 0x05:
         // Perform the SRLI operation
-        if (funct7 == 0x00)
+        switch (funct7)
         {
+        case 0x00:
             reg[rd] = (uint32_t)reg[rs1] >> shamt;
             printf("Executed SRLI: x%d = x%d >> %d\n", rd, rs1, shamt);
-        }
-        // Perform the SRAI operation
-        else if (funct7 == 0x20)
-        {
+            break;
+
+        case 0x20:
             reg[rd] = reg[rs1] >> shamt;
             printf("Executed SRAI: x%d = x%d >> %d\n", rd, rs1, shamt);
-        }
-        else
-        {
+            break;
+        default:
             printf("funct7 = %x\n", funct7);
+
+            break;
         }
 
         break;

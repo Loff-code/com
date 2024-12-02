@@ -37,7 +37,7 @@ void read_registers_from_file(const char *filename)
         {
             printf("x%zu=", i);
             // print_binary(registers[i]);               // Print the register value in binary
-            printf("%d ", registers[i]); // Print the decimal equivalent
+            printf("%x ", registers[i]); // Print the decimal equivalent
         }
     }
 

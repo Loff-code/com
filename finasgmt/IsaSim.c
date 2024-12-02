@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
         {
         case 0x3:
             imm = (int32_t)(instr & 0xFFF00000) >> 20; // Sign-extend
-            execute_l_type(instr, &reg, &memory);
+            execute_i0x03_type(rs1, rd, funct3, imm, &reg, &memory);
             break;
 
         case 0x6f:                                    // J-Type
@@ -48,12 +48,14 @@ int main(int argc, char *argv[])
             {
                 imm |= 0xFFF00000; // Sign-extend to 32 bits
             }
+
             execute_j_type(rd, rs1, imm, reg, &pc);
+
             break;
 
         case 0x13:                                     // I-Type
             imm = (int32_t)(instr & 0xFFF00000) >> 20; // Sign-extend
-            execute_i_type(rd, rs1, imm, funct3, funct7, reg);
+            execute_i0x13_type(rd, rs1, imm, funct3, funct7, reg);
             break;
 
         case 0x17: // U-Type
@@ -99,6 +101,7 @@ int main(int argc, char *argv[])
 
         // printf("Opcode %x\n", opcode);
 
+        reg[0] = 0;
         pc += 4; // Increment program counter
         if ((pc >> 2) >= MEMORY_SIZE || memory[pc >> 2] == 0)
             break;
@@ -110,6 +113,7 @@ int main(int argc, char *argv[])
 
     // Final state
     printf("Final register states:\n");
+    reg[0] = 0;
     printRegs(reg, 1);
     printf("\n\n");
 

@@ -7,19 +7,8 @@
 
 // Function prototype
 
-void execute_l_type(uint32_t instr, uint32_t *reg, uint32_t *memory)
+void execute_i0x03_type(uint32_t rs1, uint32_t rd, uint32_t funct3, int32_t imm, uint32_t *reg, uint32_t *memory)
 {
-    // Extract immediate (imm[11:0])
-    int32_t imm = (instr >> 20) & 0xFFF; // Bits 20-31
-    if (imm & 0x800)
-    {                      // Check the sign bit (bit 11)
-        imm |= 0xFFFFF000; // Sign-extend if necessary
-    }
-
-    // Extract registers and funct3
-    uint32_t rs1 = (instr >> 15) & 0x1F;    // Base register (bits 19–15)
-    uint32_t rd = (instr >> 7) & 0x1F;      // Destination register (bits 11–7)
-    uint32_t funct3 = (instr >> 12) & 0x07; // funct3 (bits 14–12)
 
     // Compute memory address
     int effective_address = reg[rs1] + imm;  // Effective memory address
