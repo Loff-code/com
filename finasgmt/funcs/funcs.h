@@ -70,21 +70,45 @@ void load_bin_file(const char *filename)
     printf("Program loaded into memory. Total instructions: %zu\n", memory_index);
 }
 
+#define NUM_REGISTERS 32
+
+// Existing printRegs function
+
+// New function to write registers to a binary file
+void write_registers_to_file(const int reg[], const char *filename)
+{
+    FILE *file = fopen(filename, "wb");
+    if (!file)
+    {
+        perror("Error opening file");
+        return;
+    }
+
+    size_t written = fwrite(reg, sizeof(int), NUM_REGISTERS, file);
+    if (written != NUM_REGISTERS)
+    {
+        fprintf(stderr, "Warning: Expected to write %d registers, but wrote %zu\n", NUM_REGISTERS, written);
+    }
+
+    fclose(file);
+}
 void printRegs(int reg[], int flag)
 {
-    for (int i = 0; i < 32; ++i)
+    for (int i = 0; i < NUM_REGISTERS; ++i)
     {
         if (flag == 0)
         {
             if (reg[i] != 0)
             {
-                printf("x%d=%d ", i, reg[i]);
+                printf("x%d=%x ", i, reg[i]);
             }
         }
         else
         {
             printf("x%d=%d ", i, reg[i]);
+            write_registers_to_file(reg, "register.dump");
         }
     }
+    printf("\n");
 }
 #endif // FUNCS_H
